@@ -63,13 +63,13 @@ export default function PropertyCard({ property, className = "" }: PropertyCardP
             {/* Características */}
             <div className="flex items-center justify-between text-gray-600 text-sm">
               <div className="flex items-center space-x-4">
-                {property.bedrooms > 0 && (
+                {property.bedrooms && property.bedrooms > 0 && (
                   <div className="flex items-center">
                     <IoBedOutline className="h-4 w-4 mr-1" />
                     <span>{property.bedrooms}</span>
                   </div>
                 )}
-                {property.bathrooms > 0 && (
+                {property.bathrooms && property.bathrooms > 0 && (
                   <div className="flex items-center">
                     <FiDroplet className="h-4 w-4 mr-1" />
                     <span>{property.bathrooms}</span>
