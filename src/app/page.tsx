@@ -1,9 +1,9 @@
 
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
-import { FiSearch, FiHome, FiTrendingUp } from "react-icons/fi";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+import { FiHome, FiSearch, FiTrendingUp } from "react-icons/fi";
 
 export default function Home() {
   return (
@@ -44,7 +44,7 @@ export default function Home() {
                 alt="Casa moderna"
                 width={600}
                 height={400}
-                className="rounded-lg shadow-2xl"
+                className="rounded-lg shadow-2xl" 
                 priority
               />
             </div>
