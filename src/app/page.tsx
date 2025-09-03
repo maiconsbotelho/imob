@@ -52,28 +52,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Imóveis em Destaque */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Imóveis em Destaque
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Selecionamos os melhores imóveis para você. Confira nossa curadoria especial 
-            com as propriedades mais procuradas.
-          </p>
-        </div>
-        
-        <FeaturedCarousel />
-        
-        <div className="text-center mt-12">
-          <Button asChild size="lg">
-            <Link href="/imoveis">
-              Ver Todos os Imóveis
-            </Link>
-          </Button>
-        </div>
-      </section>
+      {/* Seção de Imóveis em Destaque */}
+      <FeaturedCarousel />
+      
+      <div className="text-center py-8">
+        <Button asChild size="lg">
+          <Link href="/imoveis">
+            Ver Todos os Imóveis
+          </Link>
+        </Button>
+      </div>
 
       {/* Seção de Benefícios */}
       <section className="bg-gray-50 py-16">

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import PropertyDetailsClient from './PropertyDetailsClient';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 
 interface Props {
   params: { id: string };
@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const { data: property } = await supabase
       .from('properties')
-      .select('title, description, price, city, state, image_urls')
+      .select('title, description, price, city, state, images')
       .eq('id', params.id)
       .single();
 
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? `${property.description.substring(0, 150)}...`
       : `${property.title} em ${property.city}, ${property.state}. ${formatPrice(property.price)}. Entre em contato para mais informações.`;
     
-    const imageUrl = property.image_urls?.[0] || '/hero-banner.webp';
+    const imageUrl = property.images?.[0] || '/hero-banner.webp';
 
     return {
       title,

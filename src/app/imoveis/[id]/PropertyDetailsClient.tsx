@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { createClient } from '@/utils/supabase/client';
-import { Property } from '@/types/database';
+import { createClient } from '@/lib/supabase/client';
+import { Property } from '@/types/property';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -50,10 +50,7 @@ export default function PropertyDetailsClient({ propertyId }: PropertyDetailsCli
       setIsLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select(`
-          *,
-          property_type:property_types(id, name)
-        `)
+        .select('*')
         .eq('id', propertyId)
         .single();
 
@@ -143,10 +140,10 @@ export default function PropertyDetailsClient({ propertyId }: PropertyDetailsCli
         <div className="lg:col-span-2 space-y-6">
           {/* Galeria de Imagens */}
           <div className="space-y-4">
-            {property.image_urls && property.image_urls.length > 0 ? (
+            {property.images && property.images.length > 0 ? (
               <Carousel className="w-full">
                 <CarouselContent>
-                  {property.image_urls.map((imageUrl, index) => (
+                  {property.images.map((imageUrl, index) => (
                     <CarouselItem key={index}>
                       <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
                         <Image
@@ -183,9 +180,9 @@ export default function PropertyDetailsClient({ propertyId }: PropertyDetailsCli
                     </div>
                   )}
                 </div>
-                {property.is_featured && (
-                  <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-medium">
-                    Destaque
+                {property.status === 'disponivel' && (
+                  <div className="bg-green-600 text-white px-3 py-1 rounded-md text-sm font-medium">
+                    Disponível
                   </div>
                 )}
               </div>
@@ -199,13 +196,13 @@ export default function PropertyDetailsClient({ propertyId }: PropertyDetailsCli
 
                 {/* Características */}
                 <div className="flex flex-wrap gap-6 text-gray-600">
-                  {property.bedrooms > 0 && (
+                  {property.bedrooms && property.bedrooms > 0 && (
                     <div className="flex items-center">
                       <IoBedOutline className="w-5 h-5 mr-2" />
                       <span>{property.bedrooms} quarto{property.bedrooms !== 1 ? 's' : ''}</span>
                     </div>
                   )}
-                  {property.bathrooms > 0 && (
+                  {property.bathrooms && property.bathrooms > 0 && (
                     <div className="flex items-center">
                       <FiDroplet className="w-5 h-5 mr-2" />
                       <span>{property.bathrooms} banheiro{property.bathrooms !== 1 ? 's' : ''}</span>
@@ -215,12 +212,15 @@ export default function PropertyDetailsClient({ propertyId }: PropertyDetailsCli
                     <FiMaximize2 className="w-5 h-5 mr-2" />
                     <span>{property.area}m² de área</span>
                   </div>
-                  {property.property_type && (
-                    <div className="flex items-center">
-                      <FiHome className="w-5 h-5 mr-2" />
-                      <span>{property.property_type.name}</span>
-                    </div>
-                  )}
+                  <div className="flex items-center">
+                    <FiHome className="w-5 h-5 mr-2" />
+                    <span>{property.type.charAt(0).toUpperCase() + property.type.slice(1)}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-sm">
+                      {property.transaction_type === 'venda' ? 'Venda' : property.transaction_type === 'aluguel' ? 'Aluguel' : 'Venda/Aluguel'}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Descrição */}
@@ -232,6 +232,38 @@ export default function PropertyDetailsClient({ propertyId }: PropertyDetailsCli
                     </p>
                   </div>
                 )}
+
+                {/* Características/Features */}
+                {property.features && property.features.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Características</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {property.features.map((feature, index) => (
+                        <div key={index} className="flex items-center text-gray-700">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full mr-2"></div>
+                          <span className="text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Informações Adicionais */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-1">Localização</h4>
+                    <p className="text-gray-600 text-sm">{property.neighborhood && `${property.neighborhood}, `}{property.city}, {property.state}</p>
+                    {property.zip_code && (
+                      <p className="text-gray-600 text-sm">CEP: {property.zip_code}</p>
+                    )}
+                  </div>
+                  {property.built_area && (
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Área Construída</h4>
+                      <p className="text-gray-600 text-sm">{property.built_area}m²</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>

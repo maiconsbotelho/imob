@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Property } from "@/types/database";
+import { Property } from "@/types/property";
 import { Card, CardContent } from "@/components/ui/card";
-import { FiHome, FiDroplet, FiMaximize2, FiMapPin } from "react-icons/fi";
+import { FiDroplet, FiMaximize2, FiMapPin } from "react-icons/fi";
 import { IoBedOutline } from "react-icons/io5";
 
 interface PropertyCardProps {
@@ -20,11 +20,11 @@ export default function PropertyCard({ property, className = "" }: PropertyCardP
     }).format(price);
   };
 
-  const mainImage = property.image_urls?.[0] || '/placeholder-property.jpg';
+  const mainImage = property.images?.[0] || '/placeholder-property.jpg';
 
   return (
-    <Card className={`overflow-hidden hover:shadow-lg transition-shadow duration-300 ${className}`}>
-      <Link href={`/imoveis/${property.id}`}>
+    <Link href={`/imoveis/${property.id}`}>
+      <Card className={`overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer ${className}`}>
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={mainImage}
@@ -33,9 +33,9 @@ export default function PropertyCard({ property, className = "" }: PropertyCardP
             className="object-cover hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          {property.is_featured && (
-            <div className="absolute top-3 left-3 bg-blue-600 text-white px-2 py-1 rounded-md text-sm font-medium">
-              Destaque
+          {property.status === 'disponivel' && (
+            <div className="absolute top-3 left-3 bg-green-600 text-white px-2 py-1 rounded-md text-sm font-medium">
+              Disponível
             </div>
           )}
         </div>
@@ -83,7 +83,7 @@ export default function PropertyCard({ property, className = "" }: PropertyCardP
             </div>
           </div>
         </CardContent>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 }
