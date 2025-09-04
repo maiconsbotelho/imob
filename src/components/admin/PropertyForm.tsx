@@ -36,9 +36,9 @@ export default function PropertyForm({ mode, property }: PropertyFormProps) {
     title: property?.title || '',
     description: property?.description || '',
     price: property?.price || 0,
-    type: property?.type || 'house',
-    transaction_type: property?.transaction_type || 'sale',
-    status: property?.status || 'available',
+    type: property?.type || 'casa',
+    transaction_type: property?.transaction_type || 'venda',
+    status: property?.status || 'disponivel',
     bedrooms: property?.bedrooms || 1,
     bathrooms: property?.bathrooms || 1,
     area: property?.area || 0,
@@ -46,8 +46,8 @@ export default function PropertyForm({ mode, property }: PropertyFormProps) {
     city: property?.city || '',
     state: property?.state || '',
     zip_code: property?.zip_code || '',
-    latitude: property?.latitude,
-    longitude: property?.longitude,
+    latitude: property?.latitude || undefined,
+    longitude: property?.longitude || undefined,
     features: property?.features || []
   })
   

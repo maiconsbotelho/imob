@@ -3,17 +3,18 @@ import PropertyDetailsClient from './PropertyDetailsClient';
 import { createClient } from '@/lib/supabase/server';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
   const supabase = await createClient();
   
   try {
     const { data: property } = await supabase
       .from('properties')
       .select('title, description, price, city, state, images')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (!property) {
@@ -70,6 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function PropertyDetailsPage({ params }: Props) {
-  return <PropertyDetailsClient propertyId={params.id} />;
+export default async function PropertyDetailsPage({ params }: Props) {
+  const { id } = await params;
+  return <PropertyDetailsClient propertyId={id} />;
 }

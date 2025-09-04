@@ -109,7 +109,7 @@ export default function AdminDashboard({ initialProperties, session }: AdminDash
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {properties.filter(p => p.status === 'available').length}
+              {properties.filter(p => p.status === 'disponivel').length}
             </div>
           </CardContent>
         </Card>
@@ -177,15 +177,15 @@ export default function AdminDashboard({ initialProperties, session }: AdminDash
                         {property.address}, {property.city} - {property.state}
                       </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Badge variant={property.status === 'available' ? 'default' : 'secondary'}>
-                          {property.status === 'available' ? 'Disponível' : 'Indisponível'}
+                        <Badge variant={property.status === 'disponivel' ? 'default' : 'secondary'}>
+                          {property.status === 'disponivel' ? 'Disponível' : 'Indisponível'}
                         </Badge>
                         <Badge variant="outline">
-                          {property.type === 'house' ? 'Casa' : 
-                           property.type === 'apartment' ? 'Apartamento' : 'Terreno'}
+                          {property.type === 'casa' ? 'Casa' : 
+                           property.type === 'apartamento' ? 'Apartamento' : 'Terreno'}
                         </Badge>
                         <Badge variant="outline">
-                          {property.transaction_type === 'sale' ? 'Venda' : 'Aluguel'}
+                          {property.transaction_type === 'venda' ? 'Venda' : 'Aluguel'}
                         </Badge>
                       </div>
                     </div>

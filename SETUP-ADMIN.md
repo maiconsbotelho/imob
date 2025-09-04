@@ -43,10 +43,10 @@ Após executar o script, verifique se as seguintes tabelas foram criadas:
 ```sql
 INSERT INTO admin_users (id, email, role, name)
 VALUES (
-    'SEU_USER_ID_AQUI', -- Cole o User ID copiado do passo anterior
-    'admin@imobiliaria.com', -- Seu email
+    'b1e97e3b-9675-4781-a925-a0a96866d69e', 
+    'admin@admin.com', -- Seu email
     'super_admin',
-    'Administrador Principal'
+    'Maicon'
 );
 ```
 

@@ -4,12 +4,13 @@ import PropertyForm from '@/components/admin/PropertyForm'
 import { Property } from '@/types/property'
 
 interface EditPropertyPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function EditPropertyPage({ params }: EditPropertyPageProps) {
+  const { id } = await params
   const supabase = await createClient()
   
   // Check if user is authenticated
@@ -23,7 +24,7 @@ export default async function EditPropertyPage({ params }: EditPropertyPageProps
   const { data: property, error } = await supabase
     .from('properties')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error || !property) {

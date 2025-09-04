@@ -55,6 +55,28 @@ export interface CreatePropertyData {
   features?: string[];
 }
 
+// Tipo para formulário de propriedade
+export interface PropertyFormData {
+  title: string;
+  description: string;
+  price: number;
+  type: PropertyType;
+  status: PropertyStatus;
+  transaction_type: TransactionType;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  built_area?: number;
+  address: string;
+  neighborhood?: string;
+  city: string;
+  state: string;
+  zip_code?: string;
+  latitude?: number;
+  longitude?: number;
+  features: string[];
+}
+
 // Tipo para filtros de busca
 export interface PropertyFilters {
   search?: string;
